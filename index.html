@@ -267,10 +267,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form id="emailForm" action="https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec" method="POST">
+                <form id="mobileForm" action="https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec" method="POST">
                     <div class="mb-3">
-                        <label for="emailInput" class="form-label">Enter your Mobile Number</label>
-                        <input type="email" class="form-control" id="emailInput" name="Mobile Number" placeholder="Enter your Mobile Number" required>
+                        <label for="mobileInput" class="form-label">Enter your Mobile Number</label>
+                        <input type="tel" class="form-control" id="mobileInput" name="mobilenumber" placeholder="Enter your mobile number" pattern="[0-9]{10}" required>
+                        <small class="form-text text-muted">Enter a 10-digit Indian mobile number</small>
                     </div>
                     <button type="submit" class="btn w-100 text-uppercase fw-bold" style="background-color: #ff6b35; border: none;">Submit</button>
                 </form>
@@ -279,7 +280,7 @@
     </div>
 </div>
 
-<!-- CSS for Popup Styling -->
+<!-- CSS for Popup Styling (unchanged) -->
 <style>
     .modal-content {
         border-radius: 15px;
@@ -323,27 +324,23 @@
 
 <!-- JavaScript for Popup and Form Submission -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if popup has been shown in this browser session
+    document.addEventListener('DOMContentLoaded', function () {
         if (!localStorage.getItem('popupShown')) {
-            var emailPopup = new bootstrap.Modal(document.getElementById('emailPopup'), {
+            var mobilePopup = new bootstrap.Modal(document.getElementById('emailPopup'), {
                 keyboard: true
             });
-            emailPopup.show();
-
-            // Set flag in localStorage when popup is shown
+            mobilePopup.show();
             localStorage.setItem('popupShown', 'true');
         }
 
-        // Handle form submission
-        document.getElementById('emailForm').addEventListener('submit', function(e) {
+        document.getElementById('mobileForm').addEventListener('submit', function (e) {
             e.preventDefault();
             var form = this;
-            var email = document.getElementById('emailInput').value;
+            var mobile = document.getElementById('mobileInput').value;
 
-            // Basic email validation
-            if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-                alert('Please enter a valid email address.');
+            // Basic mobile number validation (Indian 10-digit)
+            if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+                alert('Please enter a valid 10-digit Indian mobile number.');
                 return;
             }
 
@@ -352,30 +349,29 @@
                 method: 'POST',
                 body: new FormData(form)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === 'success') {
-                    alert('Thank you! Your email has been submitted.');
-                    emailPopup.hide();
-                    form.reset();
-                    // Ensure popup doesn't show again
-                    localStorage.setItem('popupShown', 'true');
-                } else {
-                    alert('There was an error submitting your email. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting your email. Please try again.');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        alert('Thank you! Your mobile number has been submitted.');
+                        mobilePopup.hide();
+                        form.reset();
+                        localStorage.setItem('popupShown', 'true');
+                    } else {
+                        alert('There was an error submitting your mobile number. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting your mobile number. Please try again.');
+                });
         });
 
-        // Set popupShown flag when popup is closed
         document.getElementById('emailPopup').addEventListener('hidden.bs.modal', function () {
             localStorage.setItem('popupShown', 'true');
         });
     });
 </script>
+
 </body>
 
 </html>
