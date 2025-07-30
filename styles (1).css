@@ -1,0 +1,533 @@
+/* ===============================================
+   TGMF Orange Theme - Common Styles
+=============================================== */
+
+/* CSS Variables for Orange Theme */
+:root {
+    --orange-primary: #ff6b35;
+    --orange-light: #fff5f2;
+    --orange-dark: #e55a2b;
+    --orange-darker: #d7831a;
+    --text-dark: #333;
+    --text-muted: #666;
+    --bg-light: #f8f9fa;
+    --shadow-light: rgba(255, 107, 53, 0.15);
+    --shadow-medium: rgba(255, 107, 53, 0.25);
+    --shadow-dark: rgba(255, 107, 53, 0.4);
+}
+
+/* Base Styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+}
+
+/* Main Container */
+.main-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow-light);
+    padding: 40px;
+    margin: 20px auto;
+    min-height: 80vh;
+}
+
+/* Section Titles - Clean Style */
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h1,
+.section-title h2 {
+    color: var(--orange-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.section-title h1 {
+    font-size: 3rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+}
+
+.section-title h1:after,
+.section-title h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--orange-primary);
+    border-radius: 2px;
+}
+
+/* Column Headers - Clean Style */
+.column-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--orange-light);
+    background-color: white;
+    position: relative;
+}
+
+.column-header:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--orange-primary);
+    border-radius: 10px 10px 0 0;
+}
+
+.column-header h3,
+.column-header h4 {
+    color: var(--orange-primary);
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Orange Buttons */
+.btn-orange {
+    background-color: var(--orange-primary);
+    border-color: var(--orange-primary);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px var(--shadow-light);
+}
+
+.btn-orange:hover {
+    background-color: var(--orange-dark);
+    border-color: var(--orange-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow-medium);
+}
+
+.btn-orange:focus,
+.btn-orange.focus {
+    background-color: var(--orange-dark);
+    border-color: var(--orange-dark);
+    color: white;
+    box-shadow: 0 0 0 0.2rem var(--shadow-medium);
+}
+
+.btn-orange:active,
+.btn-orange.active {
+    background-color: var(--orange-darker);
+    border-color: var(--orange-darker);
+    color: white;
+}
+
+/* Dropdown Buttons - FIXED */
+.dropdown-btn {
+    background-color: var(--orange-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-btn:hover {
+    background-color: var(--orange-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px var(--shadow-medium);
+}
+
+.dropdown-btn:focus {
+    outline: 2px solid var(--orange-primary);
+    outline-offset: 2px;
+}
+
+.dropdown-btn.active {
+    background-color: var(--orange-darker);
+    box-shadow: 0 2px 8px var(--shadow-medium);
+}
+
+.dropdown-btn i {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active i {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Content - FIXED */
+.dropdown-content {
+    background-color: white;
+    border: 2px solid var(--orange-primary);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.3s ease;
+}
+
+/* Show state for dropdown content */
+.dropdown-content.show {
+    display: block;
+    opacity: 1;
+    max-height: 1000px;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Alternative approach - if your JS uses different classes */
+.dropdown.active .dropdown-content {
+    display: block;
+    opacity: 1;
+    max-height: 1000px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.dropdown-item {
+    display: block;
+    color: var(--orange-primary);
+    background-color: white;
+    border-bottom: 1px solid var(--orange-light);
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background-color: var(--orange-light);
+    color: var(--orange-dark);
+    padding-left: 30px;
+    text-decoration: none;
+    border-left: 4px solid var(--orange-primary);
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item i {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+/* Cards */
+.card-orange {
+    border: 2px solid var(--orange-light);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px var(--shadow-light);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card-orange:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow-medium);
+    border-color: var(--orange-primary);
+}
+
+.card-orange .card-header {
+    background-color: var(--orange-primary);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: none;
+}
+
+/* Service Cards */
+.service-card {
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--orange-light);
+    background-color: white;
+    box-shadow: 0 5px 20px var(--shadow-light);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px var(--shadow-medium);
+    border-color: var(--orange-primary);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--orange-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 5px 15px var(--shadow-medium);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1);
+    background-color: var(--orange-dark);
+}
+
+/* Blog Entry */
+.blog-entry {
+    background: white;
+    border-radius: 15px;
+    border: 2px solid var(--orange-light);
+    box-shadow: 0 5px 20px var(--shadow-light);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.blog-entry:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px var(--shadow-medium);
+    border-color: var(--orange-primary);
+}
+
+.blog-entry .entry-title h2 a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-entry .entry-title h2 a:hover {
+    color: var(--orange-primary);
+    text-decoration: none;
+}
+
+.blog-entry .entry-meta {
+    color: var(--text-muted);
+    font-size: 14px;
+    border-bottom: 1px solid var(--orange-light);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.blog-entry .entry-meta i {
+    color: var(--orange-primary);
+    margin-right: 5px;
+}
+
+.blog-entry .entry-meta a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.blog-entry .entry-meta a:hover {
+    color: var(--orange-primary);
+    text-decoration: none;
+}
+
+/* Login Form */
+.login-card {
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow-light);
+    overflow: hidden;
+    border: 2px solid var(--orange-light);
+}
+
+.login-header {
+    background-color: var(--orange-primary);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.form-control:focus {
+    border-color: var(--orange-primary);
+    box-shadow: 0 0 0 0.2rem var(--shadow-light);
+}
+
+/* Badges */
+.badge-new {
+    background-color: #ff4757;
+    color: white;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+    animation: pulse 2s infinite;
+}
+
+/* Links */
+a {
+    color: var(--orange-primary);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--orange-dark);
+    text-decoration: none;
+}
+
+/* External Link Indicator */
+a[target="_blank"]:after {
+    content: '↗';
+    font-size: 12px;
+    margin-left: 3px;
+    opacity: 0.7;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 1000px;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .section-title h1 {
+        font-size: 2rem;
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .column-header {
+        padding: 15px;
+    }
+
+    .dropdown-btn {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+
+    .dropdown-item {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .section-title h2 {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+
+    .dropdown-btn {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .main-container {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .btn-orange,
+    .dropdown-btn {
+        background-color: white !important;
+        color: var(--text-dark) !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Accessibility */
+.btn-orange:focus,
+.dropdown-btn:focus {
+    outline: 2px solid var(--orange-primary);
+    outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--orange-primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--orange-dark);
+}
