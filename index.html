@@ -257,7 +257,8 @@
  <a href="https://wa.me/9063736616?text=Hello" target="_blank" style="position: fixed; right: 25px; bottom: 50px;">
   <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" width="70">
 </a>
-  <!-- Floating Help Button -->
+
+<!-- Floating Help Button -->
 <a href="https://wa.me/8121666616?text=Hello, I have a question." class="floating-help-btn" target="_blank">
     <!-- Question Mark Icon (SVG) -->
     <!-- Alternative SVG Icon 1: Question Mark in a Circle -->
@@ -267,6 +268,8 @@
 
     <span class="tooltip-text">Have a Question?</span>
 </a>
+
+
 
 <!-- Popup Form -->
 <div class="modal fade" id="emailPopup" tabindex="-1" aria-labelledby="emailPopupLabel" aria-hidden="true">
@@ -336,7 +339,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (!localStorage.getItem('popupShown')) {
-            var mobilePopup = new bootstrap.Modal(document.getElementById('mobilePopup'), {
+            var mobilePopup = new bootstrap.Modal(document.getElementById('emailPopup'), {
                 keyboard: true
             });
             mobilePopup.show();
@@ -381,6 +384,7 @@
         });
     });
 </script>
+
 </body>
 
 </html>
