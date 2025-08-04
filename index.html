@@ -269,30 +269,41 @@
     <span class="tooltip-text">Have a Question?</span>
 </a>
 
-
-
-<!-- Popup Form -->
-<div class="modal fade" id="emailPopup" tabindex="-1" aria-labelledby="emailPopupLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #ff6b35; color: white; border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                <h5 class="modal-title fw-bold text-uppercase" id="emailPopupLabel">Subscribe to Updates</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- OTP Login Modal -->
+<div class="modal fade" id="otpLoginModal" tabindex="-1" aria-labelledby="otpLoginLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:16px;">
+      <div class="modal-header" style="background:#00509e;color:#fff;">
+        <h5 class="modal-title" id="otpLoginLabel">Secure Login (OTP)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter:invert(1);"></button>
+      </div>
+      <div class="modal-body p-4">
+        <!-- Form submission to Google Sheet via Apps Script -->
+        <form id="mobileForm" action="https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec" method="POST" autocomplete="off" novalidate>
+          <div class="mb-3">
+            <label for="loginMobile" class="form-label">Mobile Number (India)</label>
+            <input type="tel" class="form-control" id="loginMobile" name="loginMobile" placeholder="10-digit mobile" pattern="[6-9][0-9]{9}" aria-describedby="mobileHelp" required>
+            <div id="mobileHelp" class="form-text">
+              We'll send you an OTP via SMS. <b>Cost: ₹0.12–₹0.30/SMS</b>
+              <small>(e.g. MSG91, Textlocal, Twilio)</small>
             </div>
-            <div class="modal-body p-4">
-                <form id="mobileForm" action="https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec" method="POST">
-                    <div class="mb-3">
-                        <label for="mobileInput" class="form-label">Enter your Mobile Number</label>
-                        <input type="tel" class="form-control" id="mobileInput" name="mobilenumber" placeholder="Enter your mobile number" pattern="[0-9]{10}" required>
-                        <small class="form-text text-muted">Enter a 10-digit Indian mobile number</small>
-                    </div>
-                    <button type="submit" class="btn w-100 text-uppercase fw-bold" style="background-color: #ff6b35; border: none;">Submit</button>
-                </form>
-            </div>
-        </div>
+          </div>
+          <div class="mb-3 d-none" id="otpInputDiv">
+            <label for="loginOTP" class="form-label">Enter OTP</label>
+            <input type="text" class="form-control" id="loginOTP" name="loginOTP" maxlength="6" pattern="[0-9]{6}" aria-describedby="otpHelp">
+            <div id="otpHelp" class="form-text">Enter the 6-digit OTP sent to your mobile.</div>
+          </div>
+          <div class="text-danger small mb-2" id="otpError" role="alert" style="display:none;"></div>
+          <button type="button" id="sendOtpBtn" class="btn btn-primary w-100">Send OTP</button>
+          <button type="submit" id="verifyOtpBtn" class="btn btn-success w-100 d-none mt-2">Verify OTP</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
-
+<!-- OTP Modal Trigger Button (for demo) -->
+<button class="btn btn-warning" style="position:fixed;bottom:110px;right:25px;z-index:9999;" data-bs-toggle="modal" data-bs-target="#otpLoginModal" aria-label="Open OTP Login">Login (OTP)</button>
+  <script src="js/main.js"></script>
 <!-- CSS for Popup Styling (unchanged) -->
 <style>
     .modal-content {
