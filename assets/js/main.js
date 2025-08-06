@@ -68,101 +68,75 @@
     });
   }
   
-// Update these URLs to your SMS/OTP API endpoints
-const SMS_API_URL = "https://your-backend.example.com/send-otp";
-const VERIFY_API_URL = "https://your-backend.example.com/verify-otp";
+  let generatedOTP = "";
+  const otpDiv = document.getElementById("otpDiv");
+  const errorMsg = document.getElementById("errorMsg");
+  const getOtpBtn = document.getElementById("getOtpBtn");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
 
-document.addEventListener('DOMContentLoaded', function () {
-  const otpForm = document.getElementById('otpForm');
-  const mobileInput = document.getElementById('loginMobile');
-  const otpInputDiv = document.getElementById('otpInputDiv');
-  const otpInput = document.getElementById('loginOTP');
-  const sendOtpBtn = document.getElementById('sendOtpBtn');
-  const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-  const otpError = document.getElementById('otpError');
+  // Send OTP
+  getOtpBtn.addEventListener("click", () => {
+    const name = document.getElementById("userName").value.trim();
+    const mobile = document.getElementById("userMobile").value.trim();
+
+    if (name === "" || !/^[6-9]\d{9}$/.test(mobile)) {
+      showError("Please enter a valid name and mobile number.");
+      return;
+    }
+
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    alert(`Demo OTP (simulate send): ${generatedOTP}`); // Replace this with real SMS send
+
+    otpDiv.classList.remove("d-none");
+    verifyOtpBtn.classList.remove("d-none");
+    getOtpBtn.classList.add("d-none");
+    errorMsg.style.display = "none";
+  });
+
+  // Verify OTP
+  document.getElementById("authForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const enteredOTP = document.getElementById("userOTP").value.trim();
+    const name = document.getElementById("userName").value.trim();
+    const mobile = document.getElementById("userMobile").value.trim();
+
+    if (enteredOTP !== generatedOTP) {
+      showError("Incorrect OTP. Please try again.");
+      return;
+    }
+
+    // Send to Google Sheet
+    fetch("https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec", {
+      method: "POST",
+      body: new URLSearchParams({ userName: name, userMobile: mobile }),
+      mode: "no-cors" // Google Script requires this
+    });
+
+    // Store login state locally
+    localStorage.setItem("userLoggedIn", "true");
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userMobile", mobile);
+
+    // Hide modal
+    document.getElementById("authModal").style.display = "none";
+  });
 
   function showError(msg) {
-    otpError.innerText = msg;
-    otpError.style.display = 'block';
-  }
-  function clearError() {
-    otpError.innerText = '';
-    otpError.style.display = 'none';
+    errorMsg.innerText = msg;
+    errorMsg.style.display = "block";
   }
 
-  sendOtpBtn.addEventListener('click', function () {
-    clearError();
-    const mobile = mobileInput.value.trim();
-    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
-      showError("Enter a valid 10-digit Indian mobile number.");
-      return;
+  // Check login on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = localStorage.getItem("userLoggedIn");
+    if (!isLoggedIn) {
+      document.getElementById("authModal").classList.add("show", "d-block");
+    } else {
+      document.getElementById("authModal").style.display = "none";
     }
-    sendOtpBtn.disabled = true;
-    sendOtpBtn.innerText = "Sending...";
-    // Call SMS API (implement server-side for security)
-    fetch(SMS_API_URL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({mobile})
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        otpInputDiv.classList.remove("d-none");
-        verifyOtpBtn.classList.remove("d-none");
-        sendOtpBtn.classList.add("d-none");
-      } else {
-        showError(data.error || "Failed to send OTP. Try again.");
-      }
-    })
-    .catch(()=>showError("Could not send OTP."))
-    .finally(()=>{
-      sendOtpBtn.disabled = false;
-      sendOtpBtn.innerText = "Send OTP";
-    });
   });
 
-  otpForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    clearError();
-    const mobile = mobileInput.value.trim();
-    const otp = otpInput.value.trim();
-    if (!/^[0-9]{6}$/.test(otp)) {
-      showError("Enter a valid 6-digit OTP.");
-      return;
-    }
-    verifyOtpBtn.disabled = true;
-    verifyOtpBtn.innerText = "Verifying...";
-    fetch(VERIFY_API_URL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({mobile, otp})
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      if (data.verified) {
-        // Success: Grant access, close modal, etc.
-        alert("Login successful!");
-        var otpModal = bootstrap.Modal.getInstance(document.getElementById('otpLoginModal'));
-        otpModal.hide();
-        otpForm.reset();
-        otpInputDiv.classList.add("d-none");
-        verifyOtpBtn.classList.add("d-none");
-        sendOtpBtn.classList.remove("d-none");
-      } else {
-        showError(data.error || "Incorrect OTP!");
-      }
-    })
-    .catch(()=>showError("OTP verification failed."))
-    .finally(()=>{
-      verifyOtpBtn.disabled = false;
-      verifyOtpBtn.innerText = "Verify OTP";
-    });
-  });
-});
-  /**
-   * Scroll top button
-   */
+  /*** Scroll top button*/
   let scrollTop = document.querySelector('.scroll-top');
 
   function toggleScrollTop() {
