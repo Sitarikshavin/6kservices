@@ -269,38 +269,36 @@
     <span class="tooltip-text">Have a Question?</span>
 </a>
 
-<!-- OTP Login Modal -->
-<div class="modal fade" id="otpLoginModal" tabindex="-1" aria-labelledby="otpLoginLabel" aria-hidden="true">
+<!-- LOGIN MODAL -->
+<div class="modal show d-block" id="authModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius:16px;">
-      <div class="modal-header" style="background:#00509e;color:#fff;">
-        <h5 class="modal-title" id="otpLoginLabel">Secure Login (OTP)</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter:invert(1);"></button>
+    <div class="modal-content" style="border-radius: 16px;">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">User Login / Registration (OTP)</h5>
       </div>
-      <div class="modal-body p-4">
-        <!-- Form submission to Google Sheet via Apps Script -->
-        <form id="mobileForm" action="https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec" method="POST" autocomplete="off" novalidate>
+      <div class="modal-body">
+        <form id="authForm" autocomplete="off">
           <div class="mb-3">
-            <label for="loginMobile" class="form-label">Mobile Number (India)</label>
-            <input type="tel" class="form-control" id="loginMobile" name="loginMobile" placeholder="10-digit mobile" pattern="[6-9][0-9]{9}" aria-describedby="mobileHelp" required>
-            <div id="mobileHelp" class="form-text">
-              We'll send you an OTP via SMS. <b>Cost: ₹0.12–₹0.30/SMS</b>
-              <small>(e.g. MSG91, Textlocal, Twilio)</small>
-            </div>
+            <label for="userName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="userName" name="userName" required placeholder="Enter your name">
           </div>
-          <div class="mb-3 d-none" id="otpInputDiv">
-            <label for="loginOTP" class="form-label">Enter OTP</label>
-            <input type="text" class="form-control" id="loginOTP" name="loginOTP" maxlength="6" pattern="[0-9]{6}" aria-describedby="otpHelp">
-            <div id="otpHelp" class="form-text">Enter the 6-digit OTP sent to your mobile.</div>
+          <div class="mb-3">
+            <label for="userMobile" class="form-label">Mobile Number</label>
+            <input type="tel" class="form-control" id="userMobile" name="userMobile" pattern="[6-9][0-9]{9}" required placeholder="10-digit mobile">
           </div>
-          <div class="text-danger small mb-2" id="otpError" role="alert" style="display:none;"></div>
-          <button type="button" id="sendOtpBtn" class="btn btn-primary w-100">Send OTP</button>
-          <button type="submit" id="verifyOtpBtn" class="btn btn-success w-100 d-none mt-2">Verify OTP</button>
+          <div class="mb-3 d-none" id="otpDiv">
+            <label for="userOTP" class="form-label">OTP</label>
+            <input type="text" class="form-control" id="userOTP" name="userOTP" maxlength="6" pattern="[0-9]{6}" required placeholder="Enter 6-digit OTP">
+          </div>
+          <div class="text-danger small mb-2" id="errorMsg" style="display:none;"></div>
+          <button type="button" id="getOtpBtn" class="btn btn-primary w-100">Send OTP</button>
+          <button type="submit" id="verifyOtpBtn" class="btn btn-success w-100 d-none mt-2">Verify & Login</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+  
 <!-- OTP Modal Trigger Button (for demo) -->
 <button class="btn btn-warning" style="position:fixed;bottom:110px;right:25px;z-index:9999;" data-bs-toggle="modal" data-bs-target="#otpLoginModal" aria-label="Open OTP Login">Login (OTP)</button>
   <script src="js/main.js"></script>
