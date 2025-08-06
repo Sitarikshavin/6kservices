@@ -1,36 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <!-- LOGIN MODAL -->
-<div class="modal show d-block" id="authModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 16px;">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">User Login / Registration (OTP)</h5>
-      </div>
-      <div class="modal-body">
-        <form id="authForm" autocomplete="off">
-          <div class="mb-3">
-            <label for="userName" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="userName" name="userName" required placeholder="Enter your name">
-          </div>
-          <div class="mb-3">
-            <label for="userMobile" class="form-label">Mobile Number</label>
-            <input type="tel" class="form-control" id="userMobile" name="userMobile" pattern="[6-9][0-9]{9}" required placeholder="10-digit mobile">
-          </div>
-          <div class="mb-3 d-none" id="otpDiv">
-            <label for="userOTP" class="form-label">OTP</label>
-            <input type="text" class="form-control" id="userOTP" name="userOTP" maxlength="6" pattern="[0-9]{6}" required placeholder="Enter 6-digit OTP">
-          </div>
-          <div class="text-danger small mb-2" id="errorMsg" style="display:none;"></div>
-          <button type="button" id="getOtpBtn" class="btn btn-primary w-100">Send OTP</button>
-          <button type="submit" id="verifyOtpBtn" class="btn btn-success w-100 d-none mt-2">Verify & Login</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -299,11 +269,6 @@
     <span class="tooltip-text">Have a Question?</span>
 </a>
 
-
-  
-<!-- OTP Modal Trigger Button (for demo) -->
-<button class="btn btn-warning" style="position:fixed;bottom:110px;right:25px;z-index:9999;" data-bs-toggle="modal" data-bs-target="#otpLoginModal" aria-label="Open OTP Login">Login (OTP)</button>
-  <script src="js/main.js"></script>
 <!-- CSS for Popup Styling (unchanged) -->
 <style>
     .modal-content {
