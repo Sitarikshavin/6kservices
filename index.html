@@ -1,6 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mobile Login - New User Only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
 
+    .login-container {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .mobile-input {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+
+    .mobile-input img {
+      width: 24px;
+      margin-right: 8px;
+    }
+
+    .mobile-input input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 16px;
+    }
+
+    .continue-btn {
+      background-color: #1fc9b5;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      background-color: #18b1a0;
+    }
+
+    .consent-text {
+      font-size: 11px;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    .consent-text b {
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container" id="newUserContainer">
+  <h2>Log in or sign up with your mobile number.</h2>
+
+  <div class="mobile-input">
+    <img src="https://flagcdn.com/w40/in.png" alt="🇮🇳" />
+    <input type="tel" id="newUserMobile" placeholder="Enter your mobile number" pattern="[6-9][0-9]{9}" required>
+  </div>
+
+  <button class="continue-btn" onclick="checkAndProceed()">Continue</button>
+
+  <p class="consent-text">
+    Select ‘Continue’ to give consent to our <b>Terms of Service</b> and confirm that you’ve read our <b>Privacy Policy</b>.  
+    An OTP may be sent for verification. SMS charges may apply.
+  </p>
+</div>
+
+<script>
+  function checkAndProceed() {
+    const mobile = document.getElementById("newUserMobile").value.trim();
+
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+      alert("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
+
+    // 🔐 Optional: Check if number exists in your database/Google Sheet before proceeding.
+    // For now, we'll simulate it's a new user
+
+    // Save to localStorage for session (optional)
+    localStorage.setItem("pendingMobile", mobile);
+
+    // Redirect to OTP step or show next form
+    alert("OTP will be sent to: " + mobile);
+    // window.location.href = "/otp-verification.html"; // Optional redirect
+  }
+</script>
+
+</body>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
