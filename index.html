@@ -1,124 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mobile Login - New User Only</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
+<!-- FULL SCREEN LOGIN OVERLAY -->
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-box">
+    <h2>Log in or sign up with your mobile number.</h2>
 
-    .login-container {
-      background: white;
-      padding: 30px 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      width: 320px;
-      text-align: center;
-    }
+    <div class="mobile-input">
+      <img src="https://flagcdn.com/w40/in.png" alt="India Flag">
+      <input type="tel" id="userMobile" placeholder="Enter your mobile number" pattern="[6-9][0-9]{9}" required>
+    </div>
 
-    .login-container h2 {
-      margin-bottom: 20px;
-      font-size: 16px;
-      color: #444;
-    }
+    <div id="otpSection" class="otp-section hidden">
+      <input type="text" id="userOTP" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+    </div>
 
-    .mobile-input {
-      display: flex;
-      align-items: center;
-      border: 1px solid #ccc;
-      border-radius: 30px;
-      padding: 10px 15px;
-      margin-bottom: 20px;
-      background: #fff;
-    }
+    <button class="login-btn" id="continueBtn">Continue</button>
+    <button class="verify-btn hidden" id="verifyBtn">Verify OTP & Enter</button>
 
-    .mobile-input img {
-      width: 24px;
-      margin-right: 8px;
-    }
+    <p class="consent">
+      Select ‘Continue’ to give consent to our <b>Terms of Service</b> and confirm you’ve read our <b>Privacy Policy</b>.
+      An OTP may be sent for verification. SMS charges may apply.
+    </p>
 
-    .mobile-input input {
-      border: none;
-      outline: none;
-      flex: 1;
-      font-size: 16px;
-    }
-
-    .continue-btn {
-      background-color: #1fc9b5;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 12px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .continue-btn:hover {
-      background-color: #18b1a0;
-    }
-
-    .consent-text {
-      font-size: 11px;
-      color: #555;
-      margin-top: 15px;
-    }
-
-    .consent-text b {
-      color: #222;
-    }
-  </style>
-</head>
-<body>
-
-<div class="login-container" id="newUserContainer">
-  <h2>Log in or sign up with your mobile number.</h2>
-
-  <div class="mobile-input">
-    <img src="https://flagcdn.com/w40/in.png" alt="🇮🇳" />
-    <input type="tel" id="newUserMobile" placeholder="Enter your mobile number" pattern="[6-9][0-9]{9}" required>
+    <p id="errorMsg" style="color:red; display:none;"></p>
   </div>
-
-  <button class="continue-btn" onclick="checkAndProceed()">Continue</button>
-
-  <p class="consent-text">
-    Select ‘Continue’ to give consent to our <b>Terms of Service</b> and confirm that you’ve read our <b>Privacy Policy</b>.  
-    An OTP may be sent for verification. SMS charges may apply.
-  </p>
 </div>
 
-<script>
-  function checkAndProceed() {
-    const mobile = document.getElementById("newUserMobile").value.trim();
-
-    if (!/^[6-9]\d{9}$/.test(mobile)) {
-      alert("Please enter a valid 10-digit Indian mobile number.");
-      return;
-    }
-
-    // 🔐 Optional: Check if number exists in your database/Google Sheet before proceeding.
-    // For now, we'll simulate it's a new user
-
-    // Save to localStorage for session (optional)
-    localStorage.setItem("pendingMobile", mobile);
-
-    // Redirect to OTP step or show next form
-    alert("OTP will be sent to: " + mobile);
-    // window.location.href = "/otp-verification.html"; // Optional redirect
+<style>
+  .login-overlay {
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-</script>
 
-</body>
-<head>
+  .login-box {
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px;
+  }
+
+  .mobile-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background: #fff;
+  }
+
+  .mobile-input img {
+    width: 24px;
+    margin-right: 8px;
+  }
+
+  .mobile-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+  }
+
+  .otp-section input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    margin-bottom: 20px;
+  }
+
+  .login-btn, .verify-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    color: white;
+    background-color: #1fc9b5;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .verify-btn {
+    background-color: #28a745;
+  }
+
+  .consent {
+    font-size: 11px;
+    color: #555;
+    margin-top: 15px;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>6KServices</title>
@@ -428,55 +422,66 @@
     }
 </style>
 
-<!-- JavaScript for Popup and Form Submission -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        if (!localStorage.getItem('popupShown')) {
-            var mobilePopup = new bootstrap.Modal(document.getElementById('emailPopup'), {
-                keyboard: true
-            });
-            mobilePopup.show();
-            localStorage.setItem('popupShown', 'true');
-        }
+  let generatedOTP = "";
 
-        document.getElementById('mobileForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            var form = this;
-            var mobile = document.getElementById('mobileInput').value;
+  document.addEventListener("DOMContentLoaded", () => {
+    // If already logged in, hide login screen
+    if (localStorage.getItem("userLoggedIn") === "true") {
+      document.getElementById("loginOverlay").style.display = "none";
+    }
+  });
 
-            // Basic mobile number validation (Indian 10-digit)
-            if (!/^[6-9][0-9]{9}$/.test(mobile)) {
-                alert('Please enter a valid 10-digit Indian mobile number.');
-                return;
-            }
+  document.getElementById("continueBtn").addEventListener("click", () => {
+    const mobile = document.getElementById("userMobile").value.trim();
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+      showError("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
 
-            // Submit to Google Sheets
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result === 'success') {
-                        alert('Thank you! Your mobile number has been submitted.');
-                        mobilePopup.hide();
-                        form.reset();
-                        localStorage.setItem('popupShown', 'true');
-                    } else {
-                        alert('There was an error submitting your mobile number. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error submitting your mobile number. Please try again.');
-                });
-        });
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    alert("Demo OTP (for testing): " + generatedOTP); // Replace with real OTP API
+    document.getElementById("otpSection").classList.remove("hidden");
+    document.getElementById("continueBtn").classList.add("hidden");
+    document.getElementById("verifyBtn").classList.remove("hidden");
+    hideError();
+  });
 
-        document.getElementById('mobilePopup').addEventListener('hidden.bs.modal', function () {
-            localStorage.setItem('popupShown', 'true');
-        });
+  document.getElementById("verifyBtn").addEventListener("click", () => {
+    const enteredOTP = document.getElementById("userOTP").value.trim();
+    const mobile = document.getElementById("userMobile").value.trim();
+
+    if (enteredOTP !== generatedOTP) {
+      showError("Incorrect OTP. Please try again.");
+      return;
+    }
+
+    // Save to Google Sheet (optional)
+    fetch("https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec", {
+      method: "POST",
+      body: new URLSearchParams({ userMobile: mobile }),
+      mode: "no-cors"
     });
+
+    // Store login state
+    localStorage.setItem("userLoggedIn", "true");
+    localStorage.setItem("userMobile", mobile);
+
+    // Allow access
+    document.getElementById("loginOverlay").style.display = "none";
+  });
+
+  function showError(msg) {
+    const e = document.getElementById("errorMsg");
+    e.innerText = msg;
+    e.style.display = "block";
+  }
+
+  function hideError() {
+    document.getElementById("errorMsg").style.display = "none";
+  }
 </script>
+
 
 </body>
 
