@@ -310,66 +310,6 @@
     }
 </style>
 
-<script>
-  let generatedOTP = "";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // If already logged in, hide login screen
-    if (localStorage.getItem("userLoggedIn") === "true") {
-      document.getElementById("loginOverlay").style.display = "none";
-    }
-  });
-
-  document.getElementById("continueBtn").addEventListener("click", () => {
-    const mobile = document.getElementById("userMobile").value.trim();
-    if (!/^[6-9]\d{9}$/.test(mobile)) {
-      showError("Please enter a valid 10-digit Indian mobile number.");
-      return;
-    }
-
-    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    alert("Demo OTP (for testing): " + generatedOTP); // Replace with real OTP API
-    document.getElementById("otpSection").classList.remove("hidden");
-    document.getElementById("continueBtn").classList.add("hidden");
-    document.getElementById("verifyBtn").classList.remove("hidden");
-    hideError();
-  });
-
-  document.getElementById("verifyBtn").addEventListener("click", () => {
-    const enteredOTP = document.getElementById("userOTP").value.trim();
-    const mobile = document.getElementById("userMobile").value.trim();
-
-    if (enteredOTP !== generatedOTP) {
-      showError("Incorrect OTP. Please try again.");
-      return;
-    }
-
-    // Save to Google Sheet (optional)
-    fetch("https://script.google.com/macros/s/AKfycbzExOw3J6b4RzgaCNoauiyBafqlRiYz9gpKqZsgc1bn3ASrDl2OlAfTenLYqG2qXewkoA/exec", {
-      method: "POST",
-      body: new URLSearchParams({ userMobile: mobile }),
-      mode: "no-cors"
-    });
-
-    // Store login state
-    localStorage.setItem("userLoggedIn", "true");
-    localStorage.setItem("userMobile", mobile);
-
-    // Allow access
-    document.getElementById("loginOverlay").style.display = "none";
-  });
-
-  function showError(msg) {
-    const e = document.getElementById("errorMsg");
-    e.innerText = msg;
-    e.style.display = "block";
-  }
-
-  function hideError() {
-    document.getElementById("errorMsg").style.display = "none";
-  }
-</script>
-
 
 </body>
 
